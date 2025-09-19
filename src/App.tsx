@@ -208,11 +208,7 @@ function App() {
           <p className="text-sm text-gray-600 mb-4">Get the app.</p>
           <div className="flex justify-center space-x-2">
             
-            <img 
-              src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=135&h=40&fit=crop&crop=center" 
-              alt="Get it on Google Play" 
-              className="h-10 rounded"
-            />
+         
           </div>
         </div>
       </div>
