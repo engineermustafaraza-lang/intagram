@@ -207,11 +207,7 @@ function App() {
         <div className="text-center mt-6">
           <p className="text-sm text-gray-600 mb-4">Get the app.</p>
           <div className="flex justify-center space-x-2">
-            <img 
-              src="https://images.unsplash.com/photo-1512149177596-f817c7ef5d4c?w=135&h=40&fit=crop&crop=center" 
-              alt="Download on App Store" 
-              className="h-10 rounded"
-            />
+            
             <img 
               src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?w=135&h=40&fit=crop&crop=center" 
               alt="Get it on Google Play" 
