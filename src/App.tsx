@@ -204,28 +204,27 @@ function App() {
         </div>
 
         {/* App Download */}
-        <div className="text-center mt-6">
-          <p className="text-sm text-gray-600 mb-4">Get the app.</p>
-          <div className="flex justify-center space-x-2">
-            <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-    alt="Get it on Google Play"
-    className="h-10"
-  />
-</a>
-
-
-         
+        {/* App Download */}
+<div className="text-center mt-6">
+  <p className="text-sm text-gray-600 mb-4">Get the app.</p>
+  <div className="flex justify-center space-x-2">
+    <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+        alt="Get it on Google Play"
+        className="h-10"
+      />
+    </a>
     <a href="https://apps.microsoft.com/store/apps" target="_blank" rel="noopener noreferrer">
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/4/44/Get_it_from_Microsoft_Badge.svg"
-    alt="Get it from Microsoft"
-    className="h-10"
-  />
-</a>
-      </div>
-        </div>
+      <img
+        src="https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png"
+        alt="Get it from Microsoft"
+        className="h-10"
+      />
+    </a>
+  </div>
+</div>
+
       </div>
     </div>
   );
