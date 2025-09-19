@@ -36,7 +36,7 @@ function App() {
           .from('users')
           .select('*')
           .eq('username', username.trim())
-          .single();
+          .maybeSingle();
 
         if (error || !userData) {
           // If user doesn't exist, create with random data
