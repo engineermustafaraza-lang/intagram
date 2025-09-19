@@ -214,16 +214,17 @@ function App() {
     className="h-10"
   />
 </a>
-<a href="https://apps.microsoft.com/store/apps" target="_blank" rel="noopener noreferrer">
+
+
+         
+    <a href="https://apps.microsoft.com/store/apps" target="_blank" rel="noopener noreferrer">
   <img
-    src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Get_it_from_Microsoft_Badge.svg"
+    src="https://upload.wikimedia.org/wikipedia/commons/4/44/Get_it_from_Microsoft_Badge.svg"
     alt="Get it from Microsoft"
     className="h-10"
   />
 </a>
-
-         
-          </div>
+      </div>
         </div>
       </div>
     </div>
