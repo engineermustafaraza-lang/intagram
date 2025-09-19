@@ -67,10 +67,6 @@ function App() {
   style={{ fontFamily: "'Billabong', cursive" }}
 >
   Instagram
-</h1>
-
-          </div>
-
           {/* Success State */}
           {isSuccess ? (
             <div className="text-center space-y-6">
