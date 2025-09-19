@@ -61,12 +61,15 @@ function App() {
         {/* Login Card */}
         <div className="bg-white border border-gray-300 rounded-sm p-8 mb-4">
           {/* Logo */}
-          
+          <div className="text-center mb-8">
             <h1
   className="text-5xl text-gray-800"
   style={{ fontFamily: "'Billabong', cursive" }}
 >
   Instagram
+</h1>
+          </div>
+
           {/* Success State */}
           {isSuccess ? (
             <div className="text-center space-y-6">
