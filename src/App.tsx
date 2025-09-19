@@ -178,15 +178,7 @@ function App() {
               </div>
 
               {/* Reset Button */}
-              {attempts > 0 && (
-                <button
-                  type="button"
-                  onClick={handleReset}
-                  className="w-full text-gray-500 hover:text-gray-700 font-medium py-2 px-4 text-sm transition-colors duration-200 border border-gray-300 rounded-md hover:border-gray-400"
-                >
-                  Reset
-                </button>
-              )}
+             
             </form>
           )}
         </div>
