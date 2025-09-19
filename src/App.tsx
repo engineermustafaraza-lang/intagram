@@ -61,10 +61,7 @@ function App() {
         {/* Login Card */}
         <div className="bg-white border border-gray-300 rounded-sm p-8 mb-4">
           {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center mb-4">
-              <Instagram className="w-8 h-8 text-gray-800" />
-            </div>
+         
             <h1
   className="text-5xl text-gray-800"
   style={{ fontFamily: "'Billabong', cursive" }}
