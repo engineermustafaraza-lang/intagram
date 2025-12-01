@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --tsconfig tsconfig.server.json --clear-screen=false server/index.ts",
+    "dev": "tsx watch --tsconfig tsconfig.server.json --clear-screen=false --ignore 'vite.config.ts.timestamp-*' --ignore 'node_modules/**' --ignore 'dist/**' --ignore 'client/**' server/index.ts",
     "build": "vite build",
     "start": "NODE_ENV=production tsx --tsconfig tsconfig.server.json server/index.ts",
     "lint": "eslint .",
