@@ -1,32 +1,73 @@
 import type { User, InsertUser } from "@shared/schema";
+import { supabase } from "./supabase";
 
 export interface IStorage {
   getUserByUsername(username: string): Promise<User | null>;
   createUser(user: InsertUser): Promise<User>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User> = new Map();
-
+export class SupabaseStorage implements IStorage {
   async getUserByUsername(username: string): Promise<User | null> {
-    for (const user of this.users.values()) {
-      if (user.username === username) {
-        return user;
-      }
+    console.log('Fetching user by username:', username);
+    
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('username', username)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error fetching user:', error.message, error.code, error.details);
+      throw new Error(`Failed to fetch user: ${error.message}`);
     }
-    return null;
+
+    if (!data) {
+      console.log('User not found:', username);
+      return null;
+    }
+
+    console.log('User found:', data.username);
+    return {
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      followersCount: data.followers_count,
+      likesCount: data.likes_count,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
+    };
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const user: User = {
-      id: crypto.randomUUID(),
-      ...insertUser,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+    console.log('Creating user:', insertUser.username);
+    
+    const { data, error } = await supabase
+      .from('users')
+      .insert({
+        username: insertUser.username,
+        email: insertUser.email,
+        followers_count: insertUser.followersCount,
+        likes_count: insertUser.likesCount,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating user:', error.message, error.code, error.details);
+      throw new Error(`Failed to create user: ${error.message}`);
+    }
+
+    console.log('User created successfully:', data.username);
+    return {
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      followersCount: data.followers_count,
+      likesCount: data.likes_count,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
     };
-    this.users.set(user.id, user);
-    return user;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new SupabaseStorage();
