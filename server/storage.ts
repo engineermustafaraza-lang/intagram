@@ -80,10 +80,4 @@ export class SupabaseStorage implements IStorage {
   }
 }
 
-// auto choose storage
-const useSupabase =
-  import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-console.log("Using storage:", useSupabase ? "Supabase" : "Memory");
-
 export const storage = new SupabaseStorage();
