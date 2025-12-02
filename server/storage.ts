@@ -29,4 +29,6 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Use Supabase storage if environment variables are available, otherwise use memory storage
+const useSupabase = process.env.VITE_SUPABASE_URL && process.env.VITE_SUPABASE_ANON_KEY;
+export const storage = useSupabase ? new SupabaseStorage() : new MemStorage();
